@@ -22,6 +22,11 @@
                   >Recommender</nuxt-link
                 >
                 <nuxt-link
+                  to="/captioning"
+                  class="px-3 py-2 ml-4 text-sm font-medium text-red-200 transition-all duration-200 ease-in-out rounded-md hover:text-white hover:bg-red-600 focus:outline-none"
+                  >Photo Captioning</nuxt-link
+                >
+                <nuxt-link
                   to="/team"
                   class="px-3 py-2 ml-4 text-sm font-medium text-red-200 transition-all duration-200 ease-in-out rounded-md hover:text-white hover:bg-red-600 focus:outline-none"
                   >Team</nuxt-link
@@ -96,6 +101,11 @@
             to="/recommender"
             class="block px-3 py-2 mt-1 text-base font-medium text-red-200 transition-all duration-200 ease-in-out rounded-md hover:text-white hover:bg-red-600 focus:outline-none focus:text-white focus:bg-red-900"
             >Recommender</nuxt-link
+          >
+          <nuxt-link
+            to="/captioning"
+            class="block px-3 py-2 mt-1 text-base font-medium text-red-200 transition-all duration-200 ease-in-out rounded-md hover:text-white hover:bg-red-600 focus:outline-none focus:text-white focus:bg-red-900"
+            >Photo Captioning</nuxt-link
           >
           <nuxt-link
             to="/team"

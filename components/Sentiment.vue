@@ -41,7 +41,7 @@
         </select>
         <div
           v-show="model_type === 'summarization'"
-          class="text-sm text-gray-500 font-bold mt-2"
+          class="text-sm text-gray-400 font-medium mt-2"
         >
           This model may take ~30 seconds.
         </div>
@@ -77,6 +77,42 @@
           <option value="bart" selected>BART </option>
           <option value="t5">T5 </option>
         </select>
+      </div>
+      <div v-if="model_type == 'summarization'" class="mt-4 max-w-sm">
+        <div class="flex justify-between">
+          <label
+            for="min_length"
+            class="block text-sm font-bold leading-5 text-gray-700"
+            >Min length:
+          </label>
+        </div>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <input
+            id="min_length"
+            v-model="lengths.min_length"
+            class="form-input block w-full sm:text-sm sm:leading-5"
+            aria-describedby="email-optional"
+            type="number"
+          />
+        </div>
+      </div>
+      <div v-if="model_type == 'summarization'" class="mt-4 max-w-sm">
+        <div class="flex justify-between">
+          <label
+            for="max_length"
+            class="block text-sm font-bold leading-5 text-gray-700"
+            >Max length:
+          </label>
+        </div>
+        <div class="mt-1 relative rounded-md shadow-sm">
+          <input
+            id="max_length"
+            v-model="lengths.max_length"
+            class="form-input block w-full sm:text-sm sm:leading-5"
+            aria-describedby="email-optional"
+            type="number"
+          />
+        </div>
       </div>
       <div class="mt-4">
         <label
@@ -140,7 +176,7 @@
             <div class="flex items-center flex-grow h-2 mx-3 rounded-lg slider">
               <div
                 ref="indicator"
-                class="w-4 h-4 transition-all duration-500 bg-white border border-gray-700 rounded-full opacity-85"
+                class="w-6 h-6 transition-all duration-500 bg-white border border-gray-700 rounded-full opacity-85"
                 style="margin-left: 50%;"
               ></div>
             </div>
@@ -163,6 +199,18 @@ export default {
       result: false,
       model_type: 'sentiment',
       model_name: 'distilbert-regression',
+      bart_lengths: {
+        max_length: 142,
+        min_length: 56,
+      },
+      t5_lengths: {
+        max_length: 200,
+        min_length: 30,
+      },
+      lengths: {
+        max_length: 142,
+        min_length: 56,
+      },
     }
   },
   methods: {
@@ -176,12 +224,21 @@ export default {
     },
     changeModelName() {
       this.result = false
+      if (this.model_name === 'bart') {
+        this.lengths = this.bart_lengths
+      } else if (this.model_name === 't5') {
+        this.lengths = this.t5_lengths
+      }
     },
     async submit(e) {
       this.loading = true
       const data = {
         text: this.review,
         model_name: this.model_name,
+      }
+      if (this.model_type === 'summarization') {
+        data.min_length = parseInt(this.lengths.min_length)
+        data.max_length = parseInt(this.lengths.max_length)
       }
       const res = await this.$axios.$post(
         `https://8rq6v9dni0.execute-api.us-east-1.amazonaws.com/dev/${this.model_type}`,
@@ -194,7 +251,7 @@ export default {
       }
     },
     moveIndicator(sentiment) {
-      const margin = Math.min(sentiment * 100, 96)
+      const margin = Math.min(sentiment * 100, 93.7)
       this.$refs.indicator.style.marginLeft = `${margin}%`
       if (this.review.length === 0) {
         this.$refs.indicator.style.marginLeft = '50%'
