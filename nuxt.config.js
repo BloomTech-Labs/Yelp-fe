@@ -19,12 +19,19 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' },
+    ],
   },
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: '#fff' },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/assets/css/main.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -55,7 +62,31 @@ export default {
   axios: {},
   /*
    ** Build configuration
+   */
+  purgeCSS: {
+    whitelist: [
+      'page-enter-active',
+      'page-leave-active',
+      'page-enter',
+      'page-leave-to',
+    ],
+  },
+  /*
+   ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    /*
+     ** You can extend webpack config here
+     */
+    postcss: {
+      preset: {
+        features: {
+          // Fixes: https://github.com/tailwindcss/tailwindcss/issues/1190#issuecomment-546621554
+          'focus-within-pseudo-class': false,
+        },
+      },
+    },
+    extend(config, ctx) {},
+  },
 }
