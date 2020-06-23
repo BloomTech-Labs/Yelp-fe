@@ -56,6 +56,7 @@
           id="model_name"
           v-model="model_name"
           class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+          @change="changeModelName"
         >
           <option value="distilbert-regression" selected>Regression </option>
           <option value="default">Classification </option>
@@ -71,6 +72,7 @@
           id="model_name"
           v-model="model_name"
           class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+          @change="changeModelName"
         >
           <option value="bart" selected>BART </option>
           <option value="t5">T5 </option>
@@ -171,6 +173,9 @@ export default {
       } else if (this.model_type === 'summarization') {
         this.model_name = 'bart'
       }
+    },
+    changeModelName() {
+      this.result = false
     },
     async submit(e) {
       this.loading = true
