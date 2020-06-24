@@ -6,7 +6,7 @@
           <h1 class="text-3xl font-semibold text-center">
             Yelp Open Dataset Challenge
           </h1>
-          <h5>v0.2.4</h5>
+          <h5>v0.2.7</h5>
         </div>
       </div>
     </main>
